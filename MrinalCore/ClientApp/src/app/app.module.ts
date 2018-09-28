@@ -12,6 +12,7 @@ import { CustomMaterialModule } from './core/material.module';
 import { AuthenticationService } from './shared/services/user.service';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ProductService } from './shared/services/product.service';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,7 @@ import { AppRoutingModule } from './app-routing.module';
         CustomMaterialModule,
         AppRoutingModule
     ],
-    providers: [AuthenticationService],
+    providers: [AuthenticationService,ProductService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

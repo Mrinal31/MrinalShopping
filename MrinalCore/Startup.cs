@@ -48,7 +48,9 @@ namespace MrinalCore
 
             services.AddTransient<ILogin, LoginRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
-  
+            services.AddTransient<IProductRepository, ProductRepository>();
+
+
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
