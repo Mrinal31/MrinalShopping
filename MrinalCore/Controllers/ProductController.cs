@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MrinalCore.Entities;
 using MrinalCore.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,6 +22,7 @@ namespace MrinalCore.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("getProductList")]
         public List<Product> getList()
         {

@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
         this.service.authenticateUser(username, password).subscribe(
             (result) => {
                 this.service.setCurrentUser(result.user);
+                this.service.saveJWTToken(result.token);
                 this.router.navigateByUrl('/home');
             }
 

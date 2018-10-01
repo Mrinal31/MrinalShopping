@@ -37,7 +37,7 @@ namespace MrinalCore
 
             services.AddOptions();
 
-            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));        
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
 
             // In production, the Angular files will be served from this directory
@@ -76,25 +76,39 @@ namespace MrinalCore
 
             };
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(configureOptions =>
-            {
-                configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                configureOptions.TokenValidationParameters = tokenValidationParameters;
-                configureOptions.SaveToken = true;
-            });
-
-            //services.AddAuthorization(options =>
+            //services.AddAuthentication(options =>
             //{
-            //    options.AddPolicy("TravlDesk-NOUS", policy => policy.RequireClaim(TravelDesk.Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, TravelDesk.Helpers.Constants.Strings.JwtClaims.ApiAccess));
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(configureOptions =>
+            //{
+            //    configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+            //    configureOptions.TokenValidationParameters = tokenValidationParameters;
+            //    configureOptions.SaveToken = true;
             //});
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+         .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "http://localhost:50596",
+                        ValidAudience = "http://localhost:50596",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey))
+                    };
+                });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("TravlDesk-NOUS", policy => policy.RequireClaim(MrinalCore.Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, MrinalCore.Helpers.Constants.Strings.JwtClaims.ApiAccess));
+            });
 
 
 
+            services.AddCors();
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
         }
@@ -117,7 +131,7 @@ namespace MrinalCore
                 ContentTypeProvider = provider // this is not set by default
             });
             app.UseSpaStaticFiles();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

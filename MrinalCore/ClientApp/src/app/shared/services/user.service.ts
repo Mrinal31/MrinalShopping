@@ -34,4 +34,14 @@ export class AuthenticationService {
         }
     }
 
+    saveJWTToken(token: string) {
+
+        if (localStorage.getItem["Token"] == null || typeof (localStorage.getItem) == "undefined") {
+
+            localStorage.setItem("Token", token);
+
+        }
+
+    }
+
 }

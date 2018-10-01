@@ -17,8 +17,13 @@ export class ProductService {
     productList: Product[];
     getProductList(): Observable<Product[]> {
 
-        return this.http.get<Product[]>('api/product/getProductList')
-             
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Authorization': 'Bearer ' + localStorage.getItem('Token')
+            })
+        };
+        return this.http.get<Product[]>('api/product/getProductList', httpOptions);
+
 
     }
 }
