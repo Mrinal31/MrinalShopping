@@ -1,3 +1,7 @@
-<p>
-  home works!
-</p>
+<ul>
+  <li *ngFor="let product of productList">
+    <mat-card>
+      <mat-card-title>{{product.name}}</mat-card-title>
+    </mat-card>
+  </li>
+</ul>

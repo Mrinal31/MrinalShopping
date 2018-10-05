@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
+import { Environment } from '../core/environments';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
     constructor(private service: AuthenticationService, private router: Router) { }
+    env = Environment.isLoggedIn;
 
     ngOnInit() {
     }
@@ -24,10 +26,13 @@ export class LoginComponent implements OnInit {
                 this.service.setCurrentUser(result.user);
                 this.service.saveJWTToken(result.token);
                 this.router.navigateByUrl('/home');
+                this.env = true; 
             }
 
 
         );
 
     }
+
+
 }

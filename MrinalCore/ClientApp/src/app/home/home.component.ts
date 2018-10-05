@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
             (result) => {
 
                 this.productList = result;
-                console.log(this.productList);
+                
 
             }
         );

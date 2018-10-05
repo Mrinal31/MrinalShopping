@@ -12,6 +12,7 @@ using MrinalCore.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,12 +30,13 @@ namespace MrinalCore.Controllers
 
         }
 
+        [AllowAnonymous]
         [HttpPost("auth")]
         public async Task<IActionResult> Post([FromBody]UserDto userDto)
         {
             try
             {
-
+                
 
                 User LoggedInUser = _login.Login(userDto.Username, userDto.Password);
 

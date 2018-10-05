@@ -100,6 +100,8 @@ namespace MrinalCore
                         ValidAudience = "http://localhost:50596",
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey))
                     };
+
+                   
                 });
             services.AddAuthorization(options =>
             {
